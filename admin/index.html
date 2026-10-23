@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>行程後台 · 中亞雙人</title>
+  <script>
+    // 進入後台前多一次確認（符合你的安全要求）
+    if (!sessionStorage.getItem("admin_ok")) {
+      var ok = window.confirm("即將進入編輯後台，僅限你與同伴使用。是否繼續？");
+      if (!ok) {
+        window.location.href = "/";
+      } else {
+        sessionStorage.setItem("admin_ok", "1");
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+</head>
+<body>
+  <!-- Decap CMS 會自動掛載 -->
+</body>
+</html>
