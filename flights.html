@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>航班 · 中亞雙人旅行</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">中亞雙人</a>
+    <nav>
+      <a href="index.html">今日行程</a>
+      <a href="flights.html" class="active">航班</a>
+      <a href="hotels.html">酒店</a>
+      <a href="stays.html">停留</a>
+      <a href="places.html">景點地圖</a>
+      <a href="emergency.html">緊急聯絡</a>
+      <a href="admin/">後台</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>航班</h1>
+    <p class="lead">時間為當地時間。純飛行約 30 小時。標示 overnight 的路段需重新托運。</p>
+
+    <div class="stack" id="flights-list">
+      <!-- 資料也可改由後台 Markdown 產生；此處先放完整靜態版 -->
+      <article class="card">
+        <p class="meta">10月29日 · 去程</p>
+        <h2>HKG 香港 T1 → TFU 成都天府 T1</h2>
+        <p>中國國航 CA412 經濟艙 · 13:40 → 16:30 · 2h50m</p>
+      </article>
+      <article class="card">
+        <p class="meta">10月29日 · 去程</p>
+        <h2>TFU 成都天府 T1 → ALA 阿拉木圖 T2</h2>
+        <p>中國國航 CA455 經濟艙 · 20:00 → 21:45 · 4h45m</p>
+        <p class="warn">中轉成都約 3h30m · 同日接駁</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月1日</p>
+        <h2>ALA 阿拉木圖 T2 → UBN 新烏蘭巴托</h2>
+        <p>匈奴航空 MR412 經濟艙 · 12:55 → 19:35 · 3h40m</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月6日</p>
+        <h2>UBN 新烏蘭巴托 → PEK 北京 T3</h2>
+        <p>中國國航 CA902 經濟艙 · 11:50 → 13:50 · 2h</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月6日</p>
+        <h2>PEK 北京 T3 → BSZ 比什凱克</h2>
+        <p>中國國航 CA893 經濟艙 · 17:05 → 21:00 · 5h55m</p>
+        <p class="warn">中轉北京約 3h15m</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月9日</p>
+        <h2>BSZ 比什凱克 → TAS 塔什干 T2</h2>
+        <p>Centrum Air C6220 經濟艙 · 14:10 → 14:35 · 1h25m</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月10日 · Overnight</p>
+        <h2>TAS 塔什干 T3 → SKD 撒馬爾罕</h2>
+        <p>絲綢阿維亞 UH303 經濟艙 · 10:20 → 11:20 · 1h</p>
+        <p class="warn">塔什干跨天中轉約 19h45m · 需重新托運 · 注意航站樓</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月13日</p>
+        <h2>SKD 撒馬爾罕 → XIY 西安 T5</h2>
+        <p>長龍航空 GJ8938 經濟艙 · 15:45 → 23:50 · 5h05m</p>
+      </article>
+      <article class="card">
+        <p class="meta">11月14日 · Overnight · 回程公務艙</p>
+        <h2>XIY 西安 T5 → HKG 香港 T1</h2>
+        <p>國泰航空 CX947 公務艙 · 15:55 → 19:20 · 3h25m</p>
+        <p class="warn">西安跨天中轉約 16h05m · 需重新托運 · 有機場酒店接機</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">中亞雙人旅行 · 航班</footer>
+</body>
+</html>
