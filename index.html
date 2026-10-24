@@ -8,9 +8,9 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="logo" href="index.html">中亞雙人</a>
+    <a class="logo" href="index.html">中亞雙人旅行</a>
     <nav>
-      <a href="index.html" class="active">今日行程</a>
+      <a href="index.html" class="active">首頁</a>
       <a href="flights.html">航班</a>
       <a href="hotels.html">酒店</a>
       <a href="stays.html">停留</a>
@@ -20,30 +20,79 @@
     </nav>
   </header>
 
-  <main class="container">
-    <p class="eyebrow" id="countdown">載入中…</p>
-    <h1>中亞雙人旅行</h1>
-    <p class="lead">
-      2026年10月29日 – 11月14日 · 香港出發，經阿拉木圖、烏蘭巴托、比什凱克、塔什干、撒馬爾罕，再經西安回港。
-    </p>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-kicker" id="countdown">載入中…</p>
+      <h1>TRAVELING</h1>
+      <p class="lead">中亞雙人 · 2026.10.29 – 11.14<br />阿拉木圖 · 烏蘭巴托 · 比什凱克 · 塔什干 · 撒馬爾罕</p>
+      <a class="btn" href="#today">今日行程</a>
+    </div>
+  </section>
 
-    <section class="card highlight" id="today-card">
+  <section class="container" id="destinations">
+    <div class="section-head">
+      <p class="eyebrow">Our Destinations</p>
+      <h2>選擇下一站</h2>
+      <p>這次行程經過的城市 · 點擊查看住宿</p>
+    </div>
+    <div class="dest-grid">
+      <a class="dest-card" href="hotels.html#almaty">
+        <img class="dest-photo" alt="Almaty" src="https://images.unsplash.com/photo-1716835018087-e618d839eb59?auto=format&fit=crop&w=600&h=600&q=80" />
+        <h3>阿拉木圖</h3>
+        <p>Almaty · 3 晚</p>
+      </a>
+      <a class="dest-card" href="hotels.html#ub">
+        <img class="dest-photo" alt="Ulaanbaatar" src="https://images.unsplash.com/photo-1596306499317-8490232098fa?auto=format&fit=crop&w=600&h=600&q=80" />
+        <h3>烏蘭巴托</h3>
+        <p>Ulaanbaatar · 5 晚</p>
+      </a>
+      <a class="dest-card" href="hotels.html#bishkek">
+        <img class="dest-photo" alt="Bishkek" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&h=600&q=80" />
+        <h3>比什凱克</h3>
+        <p>Bishkek · 3 晚</p>
+      </a>
+      <a class="dest-card" href="hotels.html#tashkent">
+        <img class="dest-photo" alt="Tashkent" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&h=600&q=80" />
+        <h3>塔什干</h3>
+        <p>Tashkent · overnight</p>
+      </a>
+      <a class="dest-card" href="hotels.html#samarkand">
+        <img class="dest-photo" alt="Samarkand" src="https://images.unsplash.com/photo-1672532111888-f0faff0c4e42?auto=format&fit=crop&w=600&h=600&q=80" onerror="this.src='https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&h=600&q=80'" />
+        <h3>撒馬爾罕</h3>
+        <p>Samarkand · 3 晚</p>
+      </a>
+    </div>
+  </section>
+
+  <div class="photo-banner" role="img" aria-label="Central Asia landscape"></div>
+
+  <section class="container" id="today">
+    <div class="section-head">
+      <p class="eyebrow">Today</p>
       <h2>今日行程</h2>
-      <div id="today-content">
-        <p>正在讀取日期…</p>
+    </div>
+    <div class="card highlight" id="today-card">
+      <div id="today-content"><p>正在讀取日期…</p></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Quick Links</p>
+        <h2>行程工具</h2>
       </div>
-    </section>
+      <div class="grid">
+        <a class="card link-card" href="flights.html"><h3>航班</h3><p>全部航段與 overnight 提醒</p></a>
+        <a class="card link-card" href="hotels.html"><h3>酒店</h3><p>入住退房、地址、嵌入地圖</p></a>
+        <a class="card link-card" href="stays.html"><h3>停留</h3><p>各國住幾晚／轉機幾小時</p></a>
+        <a class="card link-card" href="places.html"><h3>景點地圖</h3><p>清單地點與 Google 地圖</p></a>
+        <a class="card link-card" href="emergency.html"><h3>緊急聯絡</h3><p>港／加公民與當地急救</p></a>
+      </div>
+    </div>
+  </section>
 
-    <section class="grid cards">
-      <a class="card link-card" href="flights.html"><h3>航班</h3><p>全部航段與 overnight 提醒</p></a>
-      <a class="card link-card" href="hotels.html"><h3>酒店</h3><p>入住退房、地址、嵌入地圖</p></a>
-      <a class="card link-card" href="stays.html"><h3>停留</h3><p>各國住幾晚／轉機幾小時</p></a>
-      <a class="card link-card" href="places.html"><h3>景點地圖</h3><p>清單地點與 Google 地圖</p></a>
-      <a class="card link-card" href="emergency.html"><h3>緊急聯絡</h3><p>港／加公民與當地急救</p></a>
-    </section>
-  </main>
-
-  <footer class="site-footer">中亞雙人旅行 · 僅供兩人使用</footer>
+  <footer class="site-footer">中亞雙人旅行 · 僅供兩人使用 · 圖片來自 Unsplash</footer>
   <script src="js/app.js"></script>
 </body>
 </html>
