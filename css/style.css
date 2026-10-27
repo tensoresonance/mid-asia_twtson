@@ -312,3 +312,29 @@ nav a.active { color: var(--coral); font-weight: 600; }
   .hero { min-height: 58vh; }
   .dest-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 }
+
+.tz-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.tz-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.tz-card .city { font-weight: 700; margin: 0 0 0.25rem; font-size: 1rem; }
+.tz-card .zone { color: var(--muted); font-size: 0.8rem; margin: 0 0 0.5rem; }
+.tz-card .clock {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--coral);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.tz-card .date { color: var(--muted); font-size: 0.8rem; margin: 0.25rem 0 0; }
+.tz-card.is-hkt { border-color: var(--coral); background: var(--coral-soft); }
