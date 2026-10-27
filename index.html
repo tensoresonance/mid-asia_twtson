@@ -6,7 +6,7 @@
   <title>中亞雙人旅行</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script src="js/auth-gate.js"></script>
+  <script src="js/auth-gate.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -59,7 +59,7 @@
         <p>Tashkent · overnight</p>
       </a>
       <a class="dest-card" href="hotels.html#samarkand">
-        <img class="dest-photo" alt="Samarkand" src="https://images.unsplash.com/photo-1672532111888-f0faff0c4e42?auto=format&fit=crop&w=600&h=600&q=80" onerror="this.src='https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&h=600&q=80'" />
+        <img class="dest-photo" alt="Samarkand" src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>撒馬爾罕</h3>
         <p>Samarkand · 3 晚</p>
       </a>
@@ -77,16 +77,37 @@
       <div id="today-content"><p>正在讀取日期…</p></div>
     </div>
   </section>
-  
+
   <section class="container" id="timezones">
-  <div class="section-head">
-    <p class="eyebrow">Time Zones</p>
-    <h2>各地現在時間</h2>
-    <p>以香港時間為基準 · 每秒更新</p>
-  </div>
-  <div class="tz-grid" id="tz-grid"></div>
-</section>
-  
+    <div class="section-head">
+      <p class="eyebrow">Time Zones</p>
+      <h2>時區換算</h2>
+      <p>選擇城市、輸入日期時間 → 看其他城市是幾點（含香港 HKT）</p>
+    </div>
+    <div class="card tz-converter">
+      <div class="tz-controls">
+        <label>
+          以這個城市為準
+          <select id="tz-base">
+            <option value="Asia/Hong_Kong">香港 Hong Kong (HKT)</option>
+            <option value="Asia/Almaty">阿拉木圖 Almaty</option>
+            <option value="Asia/Ulaanbaatar">烏蘭巴托 Ulaanbaatar</option>
+            <option value="Asia/Bishkek">比什凱克 Bishkek</option>
+            <option value="Asia/Tashkent">塔什干 Tashkent</option>
+            <option value="Asia/Samarkand">撒馬爾罕 Samarkand</option>
+            <option value="Asia/Shanghai">西安 Xi'an</option>
+          </select>
+        </label>
+        <label>
+          日期時間
+          <input type="datetime-local" id="tz-input" />
+        </label>
+        <button type="button" class="btn" id="tz-now" style="margin-top:0">用現在時間</button>
+      </div>
+      <div class="tz-grid" id="tz-grid"></div>
+    </div>
+  </section>
+
   <section class="band">
     <div class="container">
       <div class="section-head">
@@ -105,11 +126,10 @@
 
   <footer class="site-footer">中亞雙人旅行 · 僅供兩人使用 · 圖片來自 Unsplash</footer>
   <script src="js/app.js"></script>
-
   <script>
 (function () {
   var places = [
-    { city: "香港 HKT", en: "Hong Kong", tz: "Asia/Hong_Kong", hkt: true },
+    { city: "香港", en: "Hong Kong HKT", tz: "Asia/Hong_Kong" },
     { city: "阿拉木圖", en: "Almaty", tz: "Asia/Almaty" },
     { city: "烏蘭巴托", en: "Ulaanbaatar", tz: "Asia/Ulaanbaatar" },
     { city: "比什凱克", en: "Bishkek", tz: "Asia/Bishkek" },
@@ -118,51 +138,97 @@
     { city: "西安", en: "Xi'an", tz: "Asia/Shanghai" }
   ];
 
+  var baseEl = document.getElementById("tz-base");
+  var inputEl = document.getElementById("tz-input");
   var grid = document.getElementById("tz-grid");
-  if (!grid) return;
+  var nowBtn = document.getElementById("tz-now");
+  if (!baseEl || !inputEl || !grid) return;
+
+  function zonedTimeToUtc(dateStr, timeStr, timeZone) {
+    var guess = new Date(dateStr + "T" + timeStr + "Z");
+    var fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: timeZone,
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+      hour12: false
+    });
+    for (var i = 0; i < 3; i++) {
+      var parts = fmt.formatToParts(guess);
+      var m = {};
+      parts.forEach(function (p) { if (p.type !== "literal") m[p.type] = p.value; });
+      var asUTC = Date.UTC(+m.year, +m.month - 1, +m.day, +m.hour, +m.minute, +m.second);
+      var target = Date.UTC(
+        +dateStr.slice(0, 4), +dateStr.slice(5, 7) - 1, +dateStr.slice(8, 10),
+        +timeStr.slice(0, 2), +timeStr.slice(3, 5), +(timeStr.slice(6, 8) || "0")
+      );
+      guess = new Date(guess.getTime() + (target - asUTC));
+    }
+    return guess;
+  }
 
   function formatInTz(date, timeZone) {
     var parts = new Intl.DateTimeFormat("en-GB", {
       timeZone: timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hour12: false,
+      weekday: "short"
     }).formatToParts(date);
     var map = {};
-    parts.forEach(function (p) {
-      if (p.type !== "literal") map[p.type] = p.value;
-    });
+    parts.forEach(function (p) { if (p.type !== "literal") map[p.type] = p.value; });
     return {
-      time: map.hour + ":" + map.minute + ":" + map.second,
-      date: map.year + "-" + map.month + "-" + map.day
+      time: map.hour + ":" + map.minute,
+      date: map.year + "-" + map.month + "-" + map.day,
+      weekday: map.weekday
     };
   }
 
+  function getInputLocalParts() {
+    var v = inputEl.value;
+    if (!v) return null;
+    return { date: v.slice(0, 10), time: v.slice(11, 16) + ":00" };
+  }
+
   function render() {
-    var now = new Date();
+    var parts = getInputLocalParts();
+    if (!parts) {
+      grid.innerHTML = "<p style='color:#666;text-align:center'>請選擇日期時間</p>";
+      return;
+    }
+    var instant = zonedTimeToUtc(parts.date, parts.time, baseEl.value);
     var html = "";
-    for (var i = 0; i < places.length; i++) {
-      var p = places[i];
-      var f = formatInTz(now, p.tz);
+    places.forEach(function (p) {
+      var f = formatInTz(instant, p.tz);
+      var isBase = p.tz === baseEl.value;
       html +=
-        '<div class="tz-card' + (p.hkt ? " is-hkt" : "") + '">' +
-        '<p class="city">' + p.city + "</p>" +
+        '<div class="tz-card' + (isBase ? " is-hkt" : "") + '">' +
+        '<p class="city">' + p.city + (isBase ? " · 基準" : "") + "</p>" +
         '<p class="zone">' + p.en + "</p>" +
         '<p class="clock">' + f.time + "</p>" +
-        '<p class="date">' + f.date + "</p>" +
+        '<p class="date">' + f.weekday + " " + f.date + "</p>" +
         "</div>";
-    }
+    });
     grid.innerHTML = html;
   }
 
-  render();
-  setInterval(render, 1000);
+  function setNow() {
+    var now = new Date();
+    var parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: baseEl.value,
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hour12: false
+    }).formatToParts(now);
+    var m = {};
+    parts.forEach(function (p) { if (p.type !== "literal") m[p.type] = p.value; });
+    inputEl.value = m.year + "-" + m.month + "-" + m.day + "T" + m.hour + ":" + m.minute;
+    render();
+  }
+
+  baseEl.addEventListener("change", render);
+  inputEl.addEventListener("change", render);
+  inputEl.addEventListener("input", render);
+  nowBtn.addEventListener("click", setNow);
+  setNow();
 })();
-</script>
-  
+  </script>
 </body>
 </html>
