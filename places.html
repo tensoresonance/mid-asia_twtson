@@ -6,7 +6,71 @@
   <title>景點地圖 · 中亞雙人旅行</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script src="js/auth-gate.js"></script>
+  <script src="js/auth-gate.js"></script>
+  <style>
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 1.5rem 0 2rem;
+    }
+    .timeline-item {
+      background: #fdf0ee;
+      color: #c95a4a;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .city-select {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto 2rem;
+      padding: 0.75rem 1rem;
+      font-size: 1.05rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    .section-title {
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #e07060;
+      font-size: 1.3rem;
+    }
+    .place-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .place-card h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.15rem;
+    }
+    .place-meta {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+    .tag {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+    .empty-note {
+      color: #999;
+      font-style: italic;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -17,7 +81,7 @@
       <a href="flights.html">航班</a>
       <a href="hotels.html">酒店</a>
       <a href="stays.html">停留</a>
-      <a href="places.html">景點地圖</a>
+      <a href="places.html" class="active">景點地圖</a>
       <a href="currency.html">匯率</a>
       <a href="weather.html">天氣</a>
       <a href="emergency.html">緊急聯絡</a>
@@ -27,81 +91,164 @@
 
   <main class="container">
     <h1>景點地圖</h1>
-    <p class="lead">
-      地點來自共享清單「中亞」。可開啟完整清單，或使用下方各城市地圖。
-    </p>
-    <p>
-      <a class="btn" target="_blank" rel="noreferrer" href="https://maps.app.goo.gl/K7CebxitJqaHGmSD9">
-        開啟 Google 清單「中亞」
-      </a>
-    </p>
+    <p class="lead">選擇城市，查看該城市的景點與餐廳</p>
 
-    <section class="card">
-      <h2>阿拉木圖 Almaty</h2>
-      <p>中央清真寺、潘菲洛夫公園、科克托別、綠色巴扎、Samal-2 72 住宿等</p>
-      <div class="map-wrap tall">
-        <iframe
-          title="Almaty places"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Almaty%20Central%20Mosque&z=12&hl=zh-TW&output=embed">
-        </iframe>
-      </div>
-    </section>
+    <!-- 行程時間軸 -->
+    <div class="timeline">
+      <div class="timeline-item">10/29–11/1 阿拉木圖</div>
+      <div class="timeline-item">11/1–11/6 烏蘭巴托</div>
+      <div class="timeline-item">11/6–11/9 比什凱克</div>
+      <div class="timeline-item">11/9–11/10 塔什干</div>
+      <div class="timeline-item">11/10–11/13 撒馬爾罕</div>
+      <div class="timeline-item">11/13–11/14 西安</div>
+    </div>
 
-    <section class="card">
-      <h2>烏蘭巴托 Ulaanbaatar</h2>
-      <p>蘇赫巴托爾廣場、國家博物館、卻金喇嘛廟、扎伊桑紀念碑</p>
-      <div class="map-wrap tall">
-        <iframe
-          title="UB places"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=S%C3%BCkhbaatar%20Square%20Ulaanbaatar&z=13&hl=zh-TW&output=embed">
-        </iframe>
-      </div>
-    </section>
+    <!-- 城市選擇 -->
+    <select id="city-select" class="city-select" onchange="showCity()">
+      <option value="">請選擇城市…</option>
+      <option value="almaty">阿拉木圖 · 哈薩克 (10/29–11/1)</option>
+      <option value="ub">烏蘭巴托 · 蒙古 (11/1–11/6)</option>
+      <option value="bishkek">比什凱克 · 吉爾吉斯 (11/6–11/9)</option>
+      <option value="tashkent">塔什干 · 烏茲別克 (11/9–11/10)</option>
+      <option value="samarkand">撒馬爾罕 · 烏茲別克 (11/10–11/13)</option>
+      <option value="xian">西安 · 中國 (11/13–11/14)</option>
+    </select>
 
-    <section class="card">
-      <h2>比什凱克 Bishkek</h2>
-      <p>阿拉套廣場、奧什巴扎、伊塞克湖（可日遊）</p>
-      <div class="map-wrap tall">
-        <iframe
-          title="Bishkek places"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Ala-Too%20Square%20Bishkek&z=13&hl=zh-TW&output=embed">
-        </iframe>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>塔什干 Tashkent</h2>
-      <p>喬爾蘇巴扎、哈茲拉提伊瑪目、帖木兒廣場</p>
-      <div class="map-wrap tall">
-        <iframe
-          title="Tashkent places"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Chorsu%20Bazaar%20Tashkent&z=13&hl=zh-TW&output=embed">
-        </iframe>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>撒馬爾罕 Samarkand</h2>
-      <p>列吉斯坦、比比哈努姆、古爾·埃米爾、錫亞布巴扎、Zarafshon 酒店</p>
-      <div class="map-wrap tall">
-        <iframe
-          title="Samarkand places"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Registan%20Square%20Samarkand&z=14&hl=zh-TW&output=embed">
-        </iframe>
-      </div>
-    </section>
+    <!-- 內容區 -->
+    <div id="city-content">
+      <p class="empty-note">請先從上方選擇城市</p>
+    </div>
   </main>
 
-  <footer class="site-footer">中亞雙人旅行 · 景點</footer>
+  <footer class="site-footer">中亞雙人旅行 · 景點地圖</footer>
+
+  <script>
+    const data = {
+      almaty: {
+        name: "阿拉木圖 · 哈薩克",
+        dates: "10月29日 – 11月1日（3晚）",
+        attractions: [
+          { name: "Almaty Central Mosque（中央清真寺）", note: "重要地標，建築漂亮" },
+          { name: "Panfilov Park（潘菲洛夫公園）", note: "市區公園，適合散步" },
+          { name: "Central State Museum", note: "哈薩克歷史博物館" },
+          { name: "Abilkhan Kasteev State Art Museum", note: "藝術博物館" },
+          { name: "Holy Assumption Cathedral Church", note: "俄羅斯東正教教堂" },
+          { name: "Dostyk Plaza", note: "購物商場" }
+        ],
+        restaurants: []
+      },
+      ub: {
+        name: "烏蘭巴托 · 蒙古",
+        dates: "11月1日 – 11月6日（5晚）",
+        attractions: [
+          { name: "Sükhbaatar Square（蘇赫巴托爾廣場）", note: "市中心廣場" },
+          { name: "National Museum of Mongolia", note: "蒙古國家博物館" },
+          { name: "Choijin Lama Temple Museum", note: "卻金喇嘛廟" },
+          { name: "Zanabazar Museum of Fine Arts", note: "藝術博物館" },
+          { name: "Dashchoilin Monastery", note: "佛教寺院" },
+          { name: "Zaisan Monument", note: "觀景紀念碑" }
+        ],
+        restaurants: []
+      },
+      bishkek: {
+        name: "比什凱克 · 吉爾吉斯",
+        dates: "11月6日 – 11月9日（3晚）",
+        attractions: [
+          { name: "Ala-Too Square（阿拉套廣場）", note: "市中心廣場" },
+          { name: "Osh Bazaar（奧什巴扎）", note: "當地市集" },
+          { name: "Victory Square", note: "勝利廣場" },
+          { name: "Oak Park (Chingiz Aitmatov Park)", note: "橡樹公園" },
+          { name: "Issyk Kul（伊塞克湖）", note: "兩日團會去的著名湖泊" }
+        ],
+        restaurants: []
+      },
+      tashkent: {
+        name: "塔什干 · 烏茲別克",
+        dates: "11月9日 – 11月10日（Overnight）",
+        attractions: [
+          { name: "（ overnight 停留，時間較短）", note: "主要是轉機住宿" }
+        ],
+        restaurants: []
+      },
+      samarkand: {
+        name: "撒馬爾罕 · 烏茲別克",
+        dates: "11月10日 – 11月13日（3晚）",
+        attractions: [
+          { name: "Registan Square（列吉斯坦廣場）", note: "最著名的景點" },
+          { name: "Bibi-Khanym Mosque（比比哈努姆清真寺）", note: "大型清真寺" },
+          { name: "Gur-e-Amir（古爾·埃米爾陵墓）", note: "帖木兒陵墓" },
+          { name: "Siab Bazaar（錫亞布巴扎）", note: "傳統市集" }
+        ],
+        restaurants: []
+      },
+      xian: {
+        name: "西安 · 中國",
+        dates: "11月13日 – 11月14日（Overnight）",
+        attractions: [
+          { name: "（ overnight 停留，主要是接機住宿）", note: "時間較短" }
+        ],
+        restaurants: []
+      }
+    };
+
+    function showCity() {
+      const key = document.getElementById("city-select").value;
+      const box = document.getElementById("city-content");
+
+      if (!key || !data[key]) {
+        box.innerHTML = '<p class="empty-note">請先從上方選擇城市</p>';
+        return;
+      }
+
+      const city = data[key];
+      let html = `
+        <h2>${city.name}</h2>
+        <p style="color:#666; margin-bottom:1.5rem;">停留時間：${city.dates}</p>
+      `;
+
+      // 景點
+      html += `<h3 class="section-title">景點 Attractions</h3>`;
+      if (city.attractions.length === 0) {
+        html += `<p class="empty-note">目前還沒有景點資料</p>`;
+      } else {
+        city.attractions.forEach(p => {
+          html += `
+            <div class="place-card">
+              <h3>${p.name}</h3>
+              <div class="place-meta">${p.note || ""}</div>
+            </div>
+          `;
+        });
+      }
+
+      // 餐廳
+      html += `<h3 class="section-title">餐廳 Restaurants</h3>`;
+      if (city.restaurants.length === 0) {
+        html += `
+          <div class="empty-note">
+            目前還沒有餐廳資料。<br>
+            之後可以告訴我餐廳名稱、營業時間、招牌菜和大概價錢，我再幫你加進去。
+          </div>
+        `;
+      } else {
+        city.restaurants.forEach(r => {
+          html += `
+            <div class="place-card">
+              <h3>${r.name}</h3>
+              <div class="place-meta">
+                ${r.location ? "地點：" + r.location + "<br>" : ""}
+                ${r.hours ? "營業時間：" + r.hours + "<br>" : ""}
+                ${r.feature ? "特色：" + r.feature + "<br>" : ""}
+                ${r.food ? "招牌菜：" + r.food + "<br>" : ""}
+                ${r.price ? "大概價錢：" + r.price : ""}
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      box.innerHTML = html;
+    }
+  </script>
 </body>
 </html>
