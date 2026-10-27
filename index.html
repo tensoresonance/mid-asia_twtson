@@ -38,30 +38,30 @@
       <p>這次行程經過的城市 · 點擊查看住宿</p>
     </div>
     <div class="dest-grid">
-      <a class="dest-card" href="hotels.html#almaty">
+           <a class="dest-card" href="hotels.html#almaty">
         <img class="dest-photo" alt="Almaty" src="https://images.unsplash.com/photo-1716835018087-e618d839eb59?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>阿拉木圖</h3>
-        <p>Almaty · 3 晚</p>
+        <p>哈薩克 Kazakhstan · Almaty · 3 晚</p>
       </a>
       <a class="dest-card" href="hotels.html#ub">
         <img class="dest-photo" alt="Ulaanbaatar" src="https://images.unsplash.com/photo-1596306499317-8490232098fa?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>烏蘭巴托</h3>
-        <p>Ulaanbaatar · 5 晚</p>
+        <p>蒙古 Mongolia · Ulaanbaatar · 5 晚</p>
       </a>
       <a class="dest-card" href="hotels.html#bishkek">
         <img class="dest-photo" alt="Bishkek" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>比什凱克</h3>
-        <p>Bishkek · 3 晚</p>
+        <p>吉爾吉斯 Kyrgyzstan · Bishkek · 3 晚</p>
       </a>
       <a class="dest-card" href="hotels.html#tashkent">
         <img class="dest-photo" alt="Tashkent" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>塔什干</h3>
-        <p>Tashkent · overnight</p>
+        <p>烏茲別克 Uzbekistan · Tashkent · overnight</p>
       </a>
       <a class="dest-card" href="hotels.html#samarkand">
         <img class="dest-photo" alt="Samarkand" src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&h=600&q=80" />
         <h3>撒馬爾罕</h3>
-        <p>Samarkand · 3 晚</p>
+        <p>烏茲別克 Uzbekistan · Samarkand · 3 晚</p>
       </a>
     </div>
   </section>
@@ -89,13 +89,13 @@
         <label>
           以這個城市為準
           <select id="tz-base">
-            <option value="Asia/Hong_Kong">香港 Hong Kong (HKT)</option>
-            <option value="Asia/Almaty">阿拉木圖 Almaty</option>
-            <option value="Asia/Ulaanbaatar">烏蘭巴托 Ulaanbaatar</option>
-            <option value="Asia/Bishkek">比什凱克 Bishkek</option>
-            <option value="Asia/Tashkent">塔什干 Tashkent</option>
-            <option value="Asia/Samarkand">撒馬爾罕 Samarkand</option>
-            <option value="Asia/Shanghai">西安 Xi'an</option>
+            <option value="Asia/Hong_Kong">香港 Hong Kong · 中國 China (HKT)</option>
+            <option value="Asia/Almaty">阿拉木圖 Almaty · 哈薩克 Kazakhstan</option>
+            <option value="Asia/Ulaanbaatar">烏蘭巴托 Ulaanbaatar · 蒙古 Mongolia</option>
+            <option value="Asia/Bishkek">比什凱克 Bishkek · 吉爾吉斯 Kyrgyzstan</option>
+            <option value="Asia/Tashkent">塔什干 Tashkent · 烏茲別克 Uzbekistan</option>
+            <option value="Asia/Samarkand">撒馬爾罕 Samarkand · 烏茲別克 Uzbekistan</option>
+            <option value="Asia/Shanghai">西安 Xi'an · 中國 China</option>
           </select>
         </label>
         <label>
@@ -126,16 +126,16 @@
 
   <footer class="site-footer">中亞雙人旅行 · 僅供兩人使用 · 圖片來自 Unsplash</footer>
   <script src="js/app.js"></script>
-  <script>
+ <script>
 (function () {
   var places = [
-    { city: "香港", en: "Hong Kong HKT", tz: "Asia/Hong_Kong" },
-    { city: "阿拉木圖", en: "Almaty", tz: "Asia/Almaty" },
-    { city: "烏蘭巴托", en: "Ulaanbaatar", tz: "Asia/Ulaanbaatar" },
-    { city: "比什凱克", en: "Bishkek", tz: "Asia/Bishkek" },
-    { city: "塔什干", en: "Tashkent", tz: "Asia/Tashkent" },
-    { city: "撒馬爾罕", en: "Samarkand", tz: "Asia/Samarkand" },
-    { city: "西安", en: "Xi'an", tz: "Asia/Shanghai" }
+    { city: "香港", en: "Hong Kong · 中國", tz: "Asia/Hong_Kong" },
+    { city: "阿拉木圖", en: "Almaty · 哈薩克", tz: "Asia/Almaty" },
+    { city: "烏蘭巴托", en: "Ulaanbaatar · 蒙古", tz: "Asia/Ulaanbaatar" },
+    { city: "比什凱克", en: "Bishkek · 吉爾吉斯", tz: "Asia/Bishkek" },
+    { city: "塔什干", en: "Tashkent · 烏茲別克", tz: "Asia/Tashkent" },
+    { city: "撒馬爾罕", en: "Samarkand · 烏茲別克", tz: "Asia/Samarkand" },
+    { city: "西安", en: "Xi'an · 中國", tz: "Asia/Shanghai" }
   ];
 
   var baseEl = document.getElementById("tz-base");
@@ -166,19 +166,40 @@
     return guess;
   }
 
+  function getOffsetLabel(date, timeZone) {
+    // 例如 GMT+8 → UTC+8
+    var parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: timeZone,
+      timeZoneName: "shortOffset"
+    }).formatToParts(date);
+    var name = "";
+    parts.forEach(function (p) {
+      if (p.type === "timeZoneName") name = p.value;
+    });
+    // GMT+8 / GMT-5 / GMT+5:30
+    name = name.replace(/^GMT/, "UTC");
+    if (name === "UTC") name = "UTC+0";
+    return name;
+  }
+
   function formatInTz(date, timeZone) {
-    var parts = new Intl.DateTimeFormat("en-GB", {
+    var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: timeZone,
       year: "numeric", month: "2-digit", day: "2-digit",
-      hour: "2-digit", minute: "2-digit", hour12: false,
+      hour: "numeric", minute: "2-digit", second: "2-digit",
+      hour12: true,
       weekday: "short"
     }).formatToParts(date);
     var map = {};
     parts.forEach(function (p) { if (p.type !== "literal") map[p.type] = p.value; });
+    // hour 可能是 1～12；dayPeriod 是 AM/PM
+    var time =
+      map.hour + ":" + map.minute + ":" + map.second + " " + (map.dayPeriod || "");
     return {
-      time: map.hour + ":" + map.minute,
+      time: time,
       date: map.year + "-" + map.month + "-" + map.day,
-      weekday: map.weekday
+      weekday: map.weekday,
+      offset: getOffsetLabel(date, timeZone)
     };
   }
 
@@ -204,7 +225,7 @@
         '<p class="city">' + p.city + (isBase ? " · 基準" : "") + "</p>" +
         '<p class="zone">' + p.en + "</p>" +
         '<p class="clock">' + f.time + "</p>" +
-        '<p class="date">' + f.weekday + " " + f.date + "</p>" +
+        '<p class="date">' + f.offset + " · " + f.weekday + " " + f.date + "</p>" +
         "</div>";
     });
     grid.innerHTML = html;
@@ -229,6 +250,6 @@
   nowBtn.addEventListener("click", setNow);
   setNow();
 })();
-  </script>
+</script>
 </body>
 </html>
