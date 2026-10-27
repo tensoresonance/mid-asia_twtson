@@ -124,3 +124,60 @@
     }
   }
 })();
+
+(function () {
+  var places = [
+    { city: "香港", en: "Hong Kong", tz: "Asia/Hong_Kong", hkt: true },
+    { city: "阿拉木圖", en: "Almaty", tz: "Asia/Almaty" },
+    { city: "烏蘭巴托", en: "Ulaanbaatar", tz: "Asia/Ulaanbaatar" },
+    { city: "比什凱克", en: "Bishkek", tz: "Asia/Bishkek" },
+    { city: "塔什干", en: "Tashkent", tz: "Asia/Tashkent" },
+    { city: "撒馬爾罕", en: "Samarkand", tz: "Asia/Samarkand" },
+    { city: "西安", en: "Xi'an", tz: "Asia/Shanghai" }
+  ];
+
+  var grid = document.getElementById("tz-grid");
+  if (!grid) return;
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function formatInTz(date, timeZone) {
+    // 用 en-GB 較穩拿到 24 小時制數字
+    var parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    }).formatToParts(date);
+
+    var map = {};
+    parts.forEach(function (p) { if (p.type !== "literal") map[p.type] = p.value; });
+    return {
+      time: map.hour + ":" + map.minute + ":" + map.second,
+      date: map.year + "-" + map.month + "-" + map.day
+    };
+  }
+
+  function render() {
+    var now = new Date();
+    var html = "";
+    places.forEach(function (p) {
+      var f = formatInTz(now, p.tz);
+      html +=
+        '<div class="tz-card' + (p.hkt ? " is-hkt" : "") + '">' +
+          '<p class="city">' + p.city + "</p>" +
+          '<p class="zone">' + p.en + "</p>" +
+          '<p class="clock">' + f.time + "</p>" +
+          '<p class="date">' + f.date + "</p>" +
+        "</div>";
+    });
+    grid.innerHTML = html;
+  }
+
+  render();
+  setInterval(render, 1000);
+})();
