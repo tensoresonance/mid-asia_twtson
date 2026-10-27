@@ -150,7 +150,7 @@
       timeZone: timeZone,
       year: "numeric", month: "2-digit", day: "2-digit",
       hour: "2-digit", minute: "2-digit", second: "2-digit",
-      hour12: false
+      hour12: true
     });
     for (var i = 0; i < 3; i++) {
       var parts = fmt.formatToParts(guess);
@@ -167,7 +167,6 @@
   }
 
   function getOffsetLabel(date, timeZone) {
-    // 例如 GMT+8 → UTC+8
     var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: timeZone,
       timeZoneName: "shortOffset"
@@ -176,7 +175,6 @@
     parts.forEach(function (p) {
       if (p.type === "timeZoneName") name = p.value;
     });
-    // GMT+8 / GMT-5 / GMT+5:30
     name = name.replace(/^GMT/, "UTC");
     if (name === "UTC") name = "UTC+0";
     return name;
@@ -185,14 +183,19 @@
   function formatInTz(date, timeZone) {
     var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: timeZone,
-      year: "numeric", month: "2-digit", day: "2-digit",
-      hour: "numeric", minute: "2-digit", second: "2-digit",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
       hour12: true,
       weekday: "short"
     }).formatToParts(date);
     var map = {};
-    parts.forEach(function (p) { if (p.type !== "literal") map[p.type] = p.value; });
-    // hour 可能是 1～12；dayPeriod 是 AM/PM
+    parts.forEach(function (p) {
+      if (p.type !== "literal") map[p.type] = p.value;
+    });
     var time =
       map.hour + ":" + map.minute + ":" + map.second + " " + (map.dayPeriod || "");
     return {
@@ -202,7 +205,6 @@
       offset: getOffsetLabel(date, timeZone)
     };
   }
-
   function getInputLocalParts() {
     var v = inputEl.value;
     if (!v) return null;
@@ -236,7 +238,7 @@
     var parts = new Intl.DateTimeFormat("en-CA", {
       timeZone: baseEl.value,
       year: "numeric", month: "2-digit", day: "2-digit",
-      hour: "2-digit", minute: "2-digit", hour12: false
+      hour: "2-digit", minute: "2-digit", hour12: true
     }).formatToParts(now);
     var m = {};
     parts.forEach(function (p) { if (p.type !== "literal") m[p.type] = p.value; });
