@@ -338,3 +338,26 @@ nav a.active { color: var(--coral); font-weight: 600; }
 }
 .tz-card .date { color: var(--muted); font-size: 0.8rem; margin: 0.25rem 0 0; }
 .tz-card.is-hkt { border-color: var(--coral); background: var(--coral-soft); }
+.tz-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.tz-card {
+  background: #fff;
+  border: 1px solid var(--line, #eee);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+.tz-card .city { font-weight: 700; margin: 0 0 0.25rem; }
+.tz-card .zone { color: #666; font-size: 0.8rem; margin: 0 0 0.5rem; }
+.tz-card .clock {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #e07060;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.tz-card .date { color: #666; font-size: 0.8rem; margin: 0.25rem 0 0; }
+.tz-card.is-hkt { border-color: #e07060; background: #fdf0ee; }
