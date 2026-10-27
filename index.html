@@ -194,7 +194,6 @@
       day: "2-digit",
       hour: "numeric",
       minute: "2-digit",
-      second: "2-digit",
       hour12: true,
       weekday: "short"
     }).formatToParts(date);
@@ -202,8 +201,7 @@
     parts.forEach(function (p) {
       if (p.type !== "literal") map[p.type] = p.value;
     });
-    var time =
-      map.hour + ":" + map.minute + ":" + map.second + " " + (map.dayPeriod || "");
+    var time = map.hour + ":" + map.minute + " " + (map.dayPeriod || "");
     return {
       time: time,
       date: map.year + "-" + map.month + "-" + map.day,
@@ -211,6 +209,7 @@
       offset: getOffsetLabel(date, timeZone)
     };
   }
+  
   function getInputLocalParts() {
     var v = inputEl.value;
     if (!v) return null;
