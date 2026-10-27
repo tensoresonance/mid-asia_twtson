@@ -7,16 +7,59 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="js/auth-gate.js"></script>
+  <style>
+    .weather-grid {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      margin-top: 2rem;
+    }
+    .weather-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .weather-card h3 {
+      margin: 0 0 0.3rem;
+      font-size: 1.2rem;
+    }
+    .weather-card .country {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .temp {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #e07060;
+      margin: 0.5rem 0;
+    }
+    .desc {
+      font-size: 1.05rem;
+      color: #444;
+      margin-bottom: 0.5rem;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .loading {
+      color: #999;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
-<a class="logo" href="index.html">中亞雙人</a>
-<a href="https://drive.google.com/drive/folders/1RLAAgiYu244cvZgBGzP1X-f-2QjJE9-3?usp=sharing" target="_blank" style="margin-left:1rem; font-size:0.9rem; color:#e07060; text-decoration:none;">
-  📁 Shared Drive
-</a>
+    <a class="logo" href="index.html">中亞雙人</a>
+    <a href="https://drive.google.com/drive/folders/1RLAAgiYu244cvZgBGzP1X-f-2QjJE9-3?usp=sharing" target="_blank" style="margin-left:1rem; font-size:0.9rem; color:#e07060; text-decoration:none;">
+      📁 Shared Drive
+    </a>
     <nav>
       <a href="itinerary.html">完整行程</a>
-      <a href="index.html">首頁</a>
+      <a href="index.html">Homepage</a>
       <a href="flights.html">航班</a>
       <a href="hotels.html">酒店</a>
       <a href="stays.html">停留</a>
@@ -30,36 +73,88 @@
 
   <main class="container">
     <h1>天氣查詢</h1>
-    <p class="lead">點擊城市名稱，直接看該城市天氣</p>
+    <p class="lead">自動顯示目前天氣（資料來自 Open-Meteo）</p>
 
-    <div class="grid" style="margin-top:2rem;">
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Almaty+Kazakhstan" target="_blank">
-        <h3>阿拉木圖 Almaty</h3>
-        <p>哈薩克 · 點擊查看天氣</p>
-      </a>
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Ulaanbaatar+Mongolia" target="_blank">
-        <h3>烏蘭巴托 Ulaanbaatar</h3>
-        <p>蒙古 · 點擊查看天氣</p>
-      </a>
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Bishkek+Kyrgyzstan" target="_blank">
-        <h3>比什凱克 Bishkek</h3>
-        <p>吉爾吉斯 · 點擊查看天氣</p>
-      </a>
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Tashkent+Uzbekistan" target="_blank">
-        <h3>塔什干 Tashkent</h3>
-        <p>烏茲別克 · 點擊查看天氣</p>
-      </a>
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Samarkand+Uzbekistan" target="_blank">
-        <h3>撒馬爾罕 Samarkand</h3>
-        <p>烏茲別克 · 點擊查看天氣</p>
-      </a>
-      <a class="card link-card" href="https://www.weather.com/zh-TW/weather/today/l/Xi'an+China" target="_blank">
-        <h3>西安 Xi'an</h3>
-        <p>中國 · 點擊查看天氣</p>
-      </a>
+    <div class="weather-grid" id="weather-grid">
+      <div class="weather-card loading">正在載入天氣資料…</div>
     </div>
   </main>
 
   <footer class="site-footer">中亞雙人旅行 · 天氣</footer>
+
+  <script>
+    // 城市資料（經緯度）
+    const cities = [
+      { name: "阿拉木圖", en: "Almaty", country: "哈薩克", lat: 43.2389, lon: 76.8897 },
+      { name: "烏蘭巴托", en: "Ulaanbaatar", country: "蒙古", lat: 47.8864, lon: 106.9057 },
+      { name: "比什凱克", en: "Bishkek", country: "吉爾吉斯", lat: 42.8746, lon: 74.5698 },
+      { name: "塔什干", en: "Tashkent", country: "烏茲別克", lat: 41.2995, lon: 69.2401 },
+      { name: "撒馬爾罕", en: "Samarkand", country: "烏茲別克", lat: 39.6542, lon: 66.9597 },
+      { name: "西安", en: "Xi'an", country: "中國", lat: 34.3416, lon: 108.9398 }
+    ];
+
+    // 天氣代碼對照
+    const weatherCode = {
+      0: "晴朗",
+      1: "大致晴朗",
+      2: "多雲",
+      3: "陰天",
+      45: "有霧",
+      48: "霧",
+      51: "小毛毛雨",
+      53: "毛毛雨",
+      55: "大毛毛雨",
+      61: "小雨",
+      63: "中雨",
+      65: "大雨",
+      71: "小雪",
+      73: "中雪",
+      75: "大雪",
+      80: "陣雨",
+      81: "中陣雨",
+      82: "大陣雨",
+      95: "雷雨"
+    };
+
+    async function loadWeather() {
+      const grid = document.getElementById("weather-grid");
+      grid.innerHTML = "";
+
+      for (const city of cities) {
+        try {
+          const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,weather_code,wind_speed_10m&timezone=auto`;
+          const res = await fetch(url);
+          const data = await res.json();
+
+          const temp = Math.round(data.current.temperature_2m);
+          const code = data.current.weather_code;
+          const wind = data.current.wind_speed_10m;
+          const desc = weatherCode[code] || "未知";
+
+          const card = document.createElement("div");
+          card.className = "weather-card";
+          card.innerHTML = `
+            <h3>${city.name}</h3>
+            <div class="country">${city.en} · ${city.country}</div>
+            <div class="temp">${temp}°C</div>
+            <div class="desc">${desc}</div>
+            <div class="meta">風速 ${wind} km/h</div>
+          `;
+          grid.appendChild(card);
+        } catch (e) {
+          const card = document.createElement("div");
+          card.className = "weather-card";
+          card.innerHTML = `
+            <h3>${city.name}</h3>
+            <div class="country">${city.country}</div>
+            <div class="loading">暫時無法取得天氣</div>
+          `;
+          grid.appendChild(card);
+        }
+      }
+    }
+
+    loadWeather();
+  </script>
 </body>
 </html>
