@@ -74,15 +74,23 @@
 
   <div class="photo-banner" role="img" aria-label="Central Asia landscape"></div>
 
-  <section class="container" id="today">
-    <div class="section-head">
-      <p class="eyebrow">Today</p>
-      <h2>今日行程</h2>
-    </div>
-    <div class="card highlight" id="today-card">
-      <div id="today-content"><p>正在讀取日期…</p></div>
-    </div>
-  </section>
+<section class="container" id="today">
+  <div class="section-head">
+    <p class="eyebrow">Today</p>
+    <h2>今日行程</h2>
+    <p>選擇日期查看當天行程</p>
+  </div>
+
+  <div style="text-align:center; margin-bottom:1.25rem;">
+    <select id="day-select" style="padding:0.6rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ddd; min-width:260px;">
+      <option value="">請選擇日期…</option>
+    </select>
+  </div>
+
+  <div class="card highlight" id="today-card">
+    <div id="today-content"><p>請先選擇日期</p></div>
+  </div>
+</section>
 
   <section class="container" id="timezones">
     <div class="section-head">
