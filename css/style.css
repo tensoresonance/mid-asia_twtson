@@ -293,3 +293,46 @@ nav a.active { font-weight: 600; }
 }
 .page-hero h1 { margin: 0.25rem 0; font-size: clamp(1.8rem, 4vw, 2.4rem); }
 .page-hero p { margin: 0.5rem auto 0; color: var(--muted); max-width: 36rem; }
+
+/* ========== 酒店卡片排版（修好用） ========== */
+.hotel-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  align-items: start;
+}
+
+.hotel-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hotel-card .map-wrap {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 16 / 10;
+  background: #f0f0f0;
+}
+
+.hotel-card .map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.hotel-card .map-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* 手機版 */
+@media (max-width: 720px) {
+  .hotel-grid {
+    grid-template-columns: 1fr;
+  }
+}
