@@ -185,3 +185,31 @@ background-image: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)),
   .hero { min-height: 58vh; }
   .dest-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+.act-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+  padding: 0.65rem 1rem;
+  min-height: 44px;
+  border-radius: 8px;
+  background: var(--coral-soft);
+  color: var(--coral-hover) !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none !important;
+  line-height: 1.3;
+  word-break: break-word;
+}
+.act-link:hover {
+  background: #f8e4e0;
+  color: var(--coral) !important;
+}
+@media (max-width: 720px) {
+  .act-link {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}
