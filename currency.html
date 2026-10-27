@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>匯率計算機 · 中亞雙人旅行</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="js/auth-gate.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">中亞雙人</a>
+    <nav>
+      <a href="itinerary.html">完整行程</a>
+      <a href="index.html">今日行程</a>
+      <a href="flights.html">航班</a>
+      <a href="hotels.html">酒店</a>
+      <a href="stays.html">停留</a>
+      <a href="places.html">景點地圖</a>
+      <a href="currency.html" class="active">匯率</a>
+      <a href="weather.html">天氣</a>
+      <a href="emergency.html">緊急聯絡</a>
+      <a href="admin/">後台</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>匯率計算機</h1>
+    <p class="lead">輸入金額，快速換算這次旅行會用到的貨幣</p>
+
+    <div class="card" style="max-width:500px; margin:0 auto;">
+      <div style="margin-bottom:1.25rem;">
+        <label style="display:block; margin-bottom:0.4rem; font-weight:600;">金額</label>
+        <input type="number" id="amount" value="1000" style="width:100%; padding:0.7rem; font-size:1.1rem; border-radius:8px; border:1px solid #ddd;">
+      </div>
+
+      <div style="margin-bottom:1.25rem;">
+        <label style="display:block; margin-bottom:0.4rem; font-weight:600;">從這個貨幣</label>
+        <select id="from" style="width:100%; padding:0.7rem; font-size:1rem; border-radius:8px; border:1px solid #ddd;">
+          <option value="HKD">港幣 HKD</option>
+          <option value="CNY">人民幣 CNY</option>
+          <option value="USD">美元 USD</option>
+          <option value="KZT">哈薩克堅戈 KZT</option>
+          <option value="MNT">蒙古圖格里克 MNT</option>
+          <option value="KGS">吉爾吉斯索姆 KGS</option>
+          <option value="UZS">烏茲別克索姆 UZS</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; margin-bottom:0.4rem; font-weight:600;">換成這個貨幣</label>
+        <select id="to" style="width:100%; padding:0.7rem; font-size:1rem; border-radius:8px; border:1px solid #ddd;">
+          <option value="KZT">哈薩克堅戈 KZT</option>
+          <option value="MNT">蒙古圖格里克 MNT</option>
+          <option value="KGS">吉爾吉斯索姆 KGS</option>
+          <option value="UZS">烏茲別克索姆 UZS</option>
+          <option value="CNY">人民幣 CNY</option>
+          <option value="HKD">港幣 HKD</option>
+          <option value="USD">美元 USD</option>
+        </select>
+      </div>
+
+      <button onclick="calculate()" class="btn" style="width:100%; margin:0;">計算匯率</button>
+
+      <div id="result" style="margin-top:1.5rem; padding:1.25rem; background:#fdf0ee; border-radius:8px; text-align:center; font-size:1.3rem; font-weight:700; color:#c95a4a;">
+        結果會顯示在這裡
+      </div>
+
+      <p style="margin-top:1rem; font-size:0.85rem; color:#666; text-align:center;">
+        ※ 匯率僅供參考，實際以銀行或兌換店為準
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">中亞雙人旅行 · 匯率計算機</footer>
+
+  <script>
+    // 簡易參考匯率（約 2026 年 10 月）
+    const rates = {
+      HKD: 1,
+      CNY: 0.92,
+      USD: 0.128,
+      KZT: 62,
+      MNT: 435,
+      KGS: 11.2,
+      UZS: 1620
+    };
+
+    function calculate() {
+      const amount = parseFloat(document.getElementById("amount").value) || 0;
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+
+      // 先換成港幣，再換成目標貨幣
+      const inHKD = amount / rates[from];
+      const result = inHKD * rates[to];
+
+      document.getElementById("result").innerHTML =
+        amount.toLocaleString() + " " + from + "<br>≈<br>" +
+        result.toLocaleString(undefined, {maximumFractionDigits: 0}) + " " + to;
+    }
+
+    // 一進來就先算一次
+    calculate();
+  </script>
+</body>
+</html>
