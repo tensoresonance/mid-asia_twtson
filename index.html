@@ -227,13 +227,13 @@
     places.forEach(function (p) {
       var f = formatInTz(instant, p.tz);
       var isBase = p.tz === baseEl.value;
-      html +=
-        '<div class="tz-card' + (isBase ? " is-hkt" : "") + '">' +
-        '<p class="city">' + p.city + (isBase ? " · 基準" : "") + "</p>" +
-        '<p class="zone">' + p.en + "</p>" +
-        '<p class="clock">' + f.time + "</p>" +
-        '<p class="date">' + f.offset + " · " + f.weekday + " " + f.date + "</p>" +
-        "</div>";
+html +=
+  '<div class="tz-card' + (isBase ? " is-hkt" : "") + '">' +
+  '<p class="city">' + p.city + (isBase ? " · 基準" : "") + "</p>" +
+  '<p class="zone">' + p.en + "</p>" +
+  '<p class="clock">' + f.time + ' (' + f.offset + ')</p>' +
+  '<p class="date">' + f.weekday + ' ' + f.date + '</p>' +
+  "</div>";
     });
     grid.innerHTML = html;
   }
